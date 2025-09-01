@@ -1,17 +1,14 @@
- body {
-            font-family: 'Inter', sans-serif;
-        }
-        /* Simple class to hide elements */
-        .hidden {
-            display: none;
-        }
-        /* Custom prose styles for content */
-        .prose {
-            color: #374151;
-        }
-        .dark .prose {
-            color: #d1d5db;
-        }
-        .prose p {
-            margin-bottom: 1rem;
-        }
+body {
+  font-family: "Inter", sans-serif;
+}
+/* Simple class to hide elements */
+.hidden {
+  display: none;
+}
+/* Custom prose styles for content */
+.prose {
+  color: hsl(var(--bc) / 0.7);
+}
+.prose p {
+  margin-bottom: 1rem;
+}

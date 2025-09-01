@@ -1,0 +1,22 @@
+<div class="card bg-base-100 shadow-md {% if answer.accepted %}border border-success bg-success/10{% endif %}">
+    <div class="card-body">
+        <div class="flex gap-6">
+            <div class="flex flex-col items-center">
+                <button class="btn btn-ghost btn-sm text-lg">▲</button>
+                <span class="text-xl font-bold">{{ answer.net_votes }}</span>
+                <button class="btn btn-ghost btn-sm text-lg">▼</button>
+                {% if answer.accepted %}<div class="mt-4 text-success tooltip" data-tip="Accepted Answer">✔️</div>{% endif %}
+            </div>
+            <div class="flex-1">
+                <div class="prose max-w-none"><p>{{ answer.content }}</p></div>
+                <div class="mt-6 flex items-center space-x-2 text-sm opacity-70">
+                    <div class="avatar"><div class="w-8 rounded-full"><img src="{{ answer.author.avatar }}" alt="{{ answer.author.name }}"></div></div>
+                    <div>
+                        <div>answered by <span class="font-medium">{{ answer.author.name }}</span></div>
+                        <div>{{ answer.time_ago }} ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

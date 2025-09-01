@@ -1,0 +1,59 @@
+{% extends 'qnahub/base.html' %}
+
+{%block content %}
+<main class="flex-1" id="main-content">
+    <div class="space-y-8">
+        <div>
+            <a href="{% url 'qnahub-home' %}" class="btn btn-ghost mb-6">&larr; Back to Questions</a>
+            <div class="card bg-base-100 shadow-md border border-base-300">
+                <div class="card-body">
+                    <div class="flex gap-6">
+                        <div class="flex flex-col items-center text-center w-24 flex-shrink-0">
+                            <button class="btn btn-ghost btn-sm text-2xl">▲</button>
+                            <span class="text-2xl font-bold">{{ question.net_votes }}</span>
+                            <button class="btn btn-ghost btn-sm text-2xl">▼</button>
+                        </div>
+                        <div class="flex-1">
+                            <h1 class="text-3xl font-bold mb-4">{{ question.title }}</h1>
+                            <div class="prose max-w-none mb-6">
+                                <p>{{ question.content }}</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                {% for tag in question.tags %}
+                                <div class="badge badge-outline">{{ tag }}</div>
+                                {% endfor %}
+                            </div>
+                            <div class="flex items-center space-x-2 text-sm opacity-70">
+                                <div class="avatar">
+                                    <div class="w-8 rounded-full"><img src="{{ question.author.avatar }}" alt="{{ question.author.name }}"></div>
+                                </div>
+                                <div>
+                                    <div>asked by <span class="font-medium">{{ question.author.name }}</span></div>
+                                    <div>on {{ question.timestamp_obj|date:"M d, Y" }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h2 class="text-2xl font-bold">{{ question.answers|length }} Answers</h2>
+        <div class="space-y-6">
+            {% for answer in question.answers %}
+                {% include "qnahub/question_answer.html" with answer=answer %}
+            {% endfor %}
+        </div>
+        <div>
+            <h2 class="text-2xl font-bold mb-4">Your Answer</h2>
+            <div class="card bg-base-100 shadow-md border border-base-300">
+                <div class="card-body">
+                    <textarea class="textarea textarea-bordered h-24" placeholder="Write your detailed answer here..."></textarea>
+                    <div class="card-actions justify-end mt-4">
+                        <button class="btn btn-primary">Post Your Answer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

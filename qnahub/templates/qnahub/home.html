@@ -1,57 +1,36 @@
-{% extends "qnahub/base.html" %}
-{% block title %}Q&A Home {% endblock %}
-{% block content %}
+{% extends 'qnahub/base.html' %}
 
-    <!-- Main Content -->
-    <main class="flex-1">
-        <!-- Question List View -->
-        <div id="question-list-view">
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-3xl font-bold">All Questions</h1>
-                <!-- Sort Dropdown -->
-                <div>
-                    <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        type="button">
-                        Sort by: Newest
-                        <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 4 4 4-4" />
-                        </svg>
-                    </button>
-                    <!-- Dropdown menu -->
-                    <div id="dropdown"
-                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                            aria-labelledby="dropdownDefaultButton">
-                            <li><a href="#"
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    data-sort="newest">Newest</a></li>
-                            <li><a href="#"
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    data-sort="votes">Most Voted</a></li>
-                            <li><a href="#"
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    data-sort="answers">Most Answered</a></li>
-                        </ul>
+{%block content %}
+
+<main class="flex-1" id="main-content">
+    <!-- Question List View -->
+    <div id="question-list-view">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold">All Questions</h1>
+            
+            <!-- Sort Dropdown -->
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" id="sort-button" class="btn m-1">Sort by: Newest</div>
+                <ul tabindex="0" id="sort-dropdown" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                    <li><a data-sort="newest">Newest</a></li>
+                    <li><a data-sort="votes">Most Voted</a></li>
+                    <li><a data-sort="answers">Most Answered</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div id="question-list-container" class="space-y-4">
+            {% for q in questions %}
+                {% include "qnahub/question_card.html" with q=q %}
+            {% empty %}
+                <div class="card bg-base-100 shadow-md">
+                    <div class="card-body">
+                        <p class="text-center opacity-70">No questions found.</p>
                     </div>
                 </div>
-            </div>
-            <div id="question-list-container" class="space-y-4">
-                <!-- Questions will be dynamically inserted here -->
-            </div>
+            {% endfor %}
         </div>
-
-        <!-- Single Question Page View (hidden by default) -->
-        <div id="question-page-view" class="hidden">
-            <!-- A template for the question page, will be populated by JS -->
-        </div>
-    </main>
-
-
-
-
-
-
+    </div>
+</main>
+    
 {% endblock %}
