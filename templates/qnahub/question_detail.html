@@ -1,5 +1,4 @@
 {% extends 'qnahub/base.html' %}
-
 {%block content %}
 <main class="flex-1" id="main-content">
     <div class="space-y-8">
@@ -17,11 +16,6 @@
                             <h1 class="text-3xl font-bold mb-4">{{ question.title }}</h1>
                             <div class="prose max-w-none mb-6">
                                 <p>{{ question.content }}</p>
-                            </div>
-                            <div class="flex flex-wrap gap-2 mb-6">
-                                {% for tag in question.tags %}
-                                <div class="badge badge-outline">{{ tag }}</div>
-                                {% endfor %}
                             </div>
                             <div class="flex items-center space-x-2 text-sm opacity-70">
                                 <div class="avatar">
@@ -56,4 +50,4 @@
         </div>
     </div>
 </main>
-{% endblock %}
+{% endblock content %}

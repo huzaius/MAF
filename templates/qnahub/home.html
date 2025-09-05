@@ -1,5 +1,5 @@
 {% extends 'qnahub/base.html' %}
-
+{%block title %} {{block.super}}- Home {% endblock title %}
 {%block content %}
 
 <main class="flex-1" id="main-content">
@@ -33,4 +33,4 @@
     </div>
 </main>
     
-{% endblock %}
+{% endblock content %}

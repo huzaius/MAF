@@ -43,13 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
       // In a real app, this would be an HTMX POST request.
       const title = document.getElementById("modal-title").value;
       const body = document.getElementById("modal-body").value;
-      const tags = document
-        .getElementById("modal-tags")
-        .value.split(" ")
-        .filter(Boolean);
 
-      if (title && body && tags.length > 0) {
-        console.log("New Question Submitted (client-side):", { title, body, tags });
+      if (title && body) {
+        console.log("New Question Submitted (client-side):", { title, body });
         askQuestionForm.parentElement.parentElement.close(); // Close modal
         askQuestionForm.reset();
         // Reload the page to see the new question (in a real app, HTMX would handle this)
