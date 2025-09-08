@@ -1,4 +1,5 @@
- <aside class="w-full md:w-64 flex-shrink-0 hidden lg:block">
+{% if user.is_staff %}
+ <aside class="w-full md:w-64 flex-shrink-0 hidden md:block">
                 <ul class="menu bg-base-100 rounded-box shadow-sm border border-base-300 p-2">
                     <li class="menu-title">Navigation</li>
                     <li><a class="active">
@@ -36,3 +37,4 @@
                         </a></li>
                 </ul>
             </aside>
+{% endif %}

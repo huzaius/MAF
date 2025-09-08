@@ -19,7 +19,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>">
 
     <style>
     </style>
@@ -39,8 +40,8 @@
             <div class="navbar container mx-auto">
                 <div class="navbar-start">
                     <!-- Mobile Hamburger Menu -->
-                    <div class="dropdown">
-                        <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                    <div class="dropdown md:hidden">
+                        <div tabindex="0" role="button" class="btn btn-ghost">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -49,27 +50,40 @@
                         </div>
                         <ul tabindex="0"
                             class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                            {% if user.is_staff %}
                             <li><a>Home</a></li>
                             <li><a>Subjects</a></li>
                             <li><a>Unanswered</a></li>
                             <li><a>All Users</a></li>
                             <div class="divider"></div>
+                            {% endif %}
+                            <li>
+                                <input type="search" placeholder="Search" class="input input-bordered w-full">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
+                                        <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
+                                    </svg>
+                                    
+                                </input>
+                            </li>
                             <li><button class="btn btn-primary btn-sm w-full"
                                     onclick="ask_question_modal.showModal()">Ask Question</button></li>
                         </ul>
                     </div>
                     <!-- Title -->
                     <div class="flex items-center space-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                        <div class="hidden md:block">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="text-primary">
                             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                         </svg>
+                        </div>
+                        
                         <a href="{% url 'qnahub-home' %}" class="text-xl md:text-2xl font-bold">Q&A HUB</a>
                     </div>
                 </div>
 
-                <div class="navbar-center hidden lg:flex">
+                <div class="navbar-center hidden sm:flex">
                     <!-- Larger Search Bar -->
                     <div class="form-control w-full max-w-2xl">
                         <label class="input input-bordered flex items-center gap-2">
@@ -86,44 +100,9 @@
 
                 <div class="navbar-end">
                     <!-- Desktop View -->
-                    <div class="hidden lg:flex items-center gap-2">
+                    <div class="hidden md:flex items-center gap-2">
                         <!-- Theme Icons -->
-                        <div id="theme-icon-container"
-                            class="flex items-center gap-1 mr-2 p-1 bg-base-200 rounded-full">
-                            <button title="Winter" data-theme-value="winter"
-                                class="theme-btn btn btn-sm btn-ghost btn-circle">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="5"></circle>
-                                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                                </svg>
-                            </button>
-                            <button title="Retro" data-theme-value="retro"
-                                class="theme-btn btn btn-sm btn-ghost btn-circle">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gamepad-2">
-                                    <line x1="6" x2="10" y1="12" y2="12"></line>
-                                    <line x1="8" x2="8" y1="10" y2="14"></line>
-                                    <line x1="15" x2="15.01" y1="13" y2="13"></line>
-                                    <line x1="18" x2="18.01" y1="10" y2="10"></line>
-                                    <path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.01.15v5.52c0 .049.004.098.01.15a4 4 0 0 0 3.978 3.59h10.64a4 4 0 0 0 3.978-3.59c.006-.052.01-.101.01-.15v-5.52c0-.049-.004-.098-.01-.15a4 4 0 0 0-3.978-3.59z"></path>
-                                </svg>
-                            </button>
-                            <button title="Luxury" data-theme-value="luxury"
-                                class="theme-btn btn btn-sm btn-ghost btn-circle">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gem">
-                                    <path d="M6 3h12l4 6-10 13L2 9Z"></path>
-                                    <path d="M12 22V9"></path>
-                                    <path d="m3.5 8.5 17 0"></path>
-                                    <path d="m8 3 4 6 4-6"></path>
-                                </svg>
-                            </button>
-                        </div>
+                        {% include "qnahub/theme_icons.html" %}
 
                         <button class="btn btn-primary" onclick="ask_question_modal.showModal()">Ask Question</button>
 
@@ -133,7 +112,8 @@
                         <div class="dropdown dropdown-end">
                             <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                                 <div class="ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
-                                    <img alt="User Avatar" src="https://placehold.co/40x40/4f46e5/ffffff?text={{ user.username|first|upper }}" />
+                                    <img alt="User Avatar"
+                                        src="https://placehold.co/40x40/4f46e5/ffffff?text={{ user.username|first|upper }}" />
                                 </div>
                             </div>
                             <ul tabindex="0"
@@ -153,45 +133,55 @@
                         <a class="btn btn-primary " href="{% url 'register' %}"> Register </a>
                         {% endif %}
                     </div>
-                    <!-- Mobile User Icon -->
-                    <div class="dropdown dropdown-end lg:hidden">
-                        <button id="mobile-theme-btn" title="Change Theme" class="btn btn-ghost btn-circle mr-1">
-                            <!-- SVG will be dynamically inserted here by JS -->
-                        </button>
-                        {% if user.is_authenticated %}
-                        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-                            <div class="ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
-                                <img alt="User Avatar" src="https://placehold.co/40x40/4f46e5/ffffff?text={{ user.username|first|upper }}" />
+                    <!-- Mobile Icons -->
+                    <div class="flex items-center gap-1 md:hidden">
+                        <!-- Theme Icons for Mobile -->
+
+                        <div class="p-1 bg-base-200 rounded-full mr-1">
+                            {% include "qnahub/theme_icons.html" %}
+                        </div>
+
+
+                        <!-- Mobile User/Login Dropdown -->
+                        <div class="dropdown dropdown-end">
+                            {% if user.is_authenticated %}
+                            <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                                <div class="ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
+                                    <img alt="User Avatar"
+                                        src="https://placehold.co/40x40/4f46e5/ffffff?text={{ user.username|first|upper }}" />
+                                </div>
                             </div>
+                            {% else %}
+                            <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    class="inline-block w-5 h-5 stroke-current">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z">
+                                    </path>
+                                </svg>
+
+                            </div>
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                            <ul tabindex="0"
+                                class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                                <li><a href="{% url 'account' %}" class="justify-between">My Account</a></li>
+                                <li>
+                                    <form action="{% url 'logout' %}" method="post" class="w-full">
+                                        {% csrf_token %}
+                                        <button type="submit" class="w-full text-left">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                            {% else %}
+                            <!-- Login/Register -->
+                            <ul tabindex="0"
+                                class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                                <li><a href="{% url 'login' %}">Login</a></li>
+                                <li><a href="{% url 'register' %}">Register</a></li>
+                            </ul>
+                            {% endif %}
                         </div>
-                        {% else %}
-                        <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
-                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
-                        </div>
-                        {% endif %}
-
-
-
-                        <!-- User Dropdown -->
-                        {% if user.is_authenticated %}
-                        <ul tabindex="0"
-                            class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                            <li><a href="{% url 'account' %}" class="justify-between">My Account</a></li>
-                             <li>
-                                <form action="{% url 'logout' %}" method="post" class="w-full">
-                                    {% csrf_token %}
-                                    <button type="submit" class="w-full text-left">Logout</button>
-                                </form>
-                            </li>
-                        </ul>
-                        {% else %}
-                        <!-- Login/Register -->
-                        <ul tabindex="0"
-                            class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                            <li><a href="{% url 'login' %}">Login</a></li>
-                            <li><a href="{% url 'register' %}">Register</a></li>
-                        </ul>
-                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -201,7 +191,6 @@
 
             <!-- Sidebar -->
             {% include "qnahub/sidebar.html" %}
-
 
             <!-- Flash messages -->
             <div class="flex-1">
