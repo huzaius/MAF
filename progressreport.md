@@ -13,3 +13,50 @@ uv django-admin startapp QNAHub
         {'id': 3, 'author': {'name': 'Ethan Davis', 'avatar': 'https://placehold.co/40x40/0369a1/ffffff?text=ED'}, 'title': 'How to pass props from a parent to a deeply nested child component in React?',
             'content': 'I have a component tree that is 5 levels deep. Passing props down through every single component seems inefficient and makes the code messy. Is there a better way to manage this kind of state, like using Context API or a state management library like Zustand?', 'tags': ['react', 'state-management', 'context-api'], 'upvotes': 98, 'downvotes': 1, 'answersCount': 3, 'timestamp': '2024-08-19T09:00:00Z', 'answers': []}
     ]
+
+
+
+
+
+
+
+def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('qnahub-home')
+
+    if request.method == 'POST':
+        form = CustomAuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('qnahub-home')
+    else:
+        form = CustomAuthenticationForm()
+    return render(request, 'qnahub/login.html', {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('qnahub-home')
+
+
+def register_view(request):
+    if request.user.is_authenticated:
+        return redirect('qnahub-home')
+
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Registration successful.")
+            return redirect("qnahub-home")
+        messages.error(
+            request, "Unsuccessful registration. Invalid information.")
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'qnahub/register.html', {'form': form})
+
+
+def account_view(request):
+    return render(request, 'qnahub/account.html')

@@ -1,0 +1,49 @@
+{% load static %}
+{% load tailwind_filters %}
+
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{% static 'auth-page.css' %}">
+
+</head>
+
+<body>
+
+
+    <div
+        class="card bg-base-100 shadow-xl w-full max-w-5xl rounded-2xl p-8 flex flex-col lg:flex-row items-center lg:items-stretch">
+        <!-- Left Side: Forms -->
+        <div class="w-full lg:w-1/2 p-4">
+            {% block content %}{% endblock %}
+        </div>
+
+        <!-- Vertical Divider -->
+        <div class="divider lg:divider-horizontal hidden lg:block"></div>
+
+        <!-- Right Side: Image and Welcome Text -->
+        <div class="hidden lg:flex w-full lg:w-1/2 p-4 flex-col items-center justify-center text-center">
+            <h2 class="text-3xl font-bold mb-6">Seamlessly Manage Your Account</h2>
+            <img src="https://placehold.co/600x400/2d3748/ffffff?text=Welcome" alt="Welcome to the app"
+                class="w-full h-auto rounded-lg shadow-md mb-4" />
+            <p class="text-gray-400">
+                <a href="/login">Sign in </a> or <a href='/register'>create an account</a>  to get started on your journey.
+            </p>
+        </div>
+
+
+    </div>
+
+    <script src="{% static 'auth-page.js' %}">
+
+    </script>
+</body>
+
+</html>

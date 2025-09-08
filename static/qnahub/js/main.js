@@ -24,17 +24,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  if (themeIconContainer) {
-    themeIconContainer.addEventListener("click", (e) => {
-      const button = e.target.closest(".theme-btn");
-      if (button && button.dataset.themeValue) {
-        const theme = button.dataset.themeValue;
-        htmlTag.setAttribute("data-theme", theme);
-        // Persist theme choice
-        localStorage.setItem('theme', theme);
-      }
-    });
+  // --- Theme Switching Logic ---
+  function initializeThemeSwitchers() {
+    // Note: mobileThemeBtn and icon pre-loading logic has been removed.
+  
+    // Desktop theme switcher
+    if (themeIconContainer) {
+        themeIconContainer.addEventListener("click", (e) => {
+            const button = e.target.closest(".theme-btn");
+            if (button && button.dataset.themeValue) {
+                const theme = button.dataset.themeValue;
+                htmlTag.setAttribute("data-theme", theme);
+                localStorage.setItem('theme', theme);
+            }
+        });
+    }
   }
+
+  initializeThemeSwitchers();
 
   if (askQuestionForm) {
     askQuestionForm.addEventListener("submit", (e) => {

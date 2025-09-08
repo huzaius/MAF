@@ -23,7 +23,7 @@
                                 </div>
                                 <div>
                                     <div>asked by <span class="font-medium">{{ question.author.name }}</span></div>
-                                    <div>on {{ question.timestamp_obj|date:"M d, Y" }}</div>
+                                    <div>on {{ question.timestamp|timesince }}</div>
                                 </div>
                             </div>
                         </div>

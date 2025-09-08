@@ -1,0 +1,17 @@
+body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+        .form-container {
+            transition: all 0.5s ease-in-out;
+        }
+        .hidden-form {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+        }
