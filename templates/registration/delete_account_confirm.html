@@ -1,0 +1,23 @@
+{% extends 'registration/auth-base.html' %}
+{% block title %}Confirm Account Deletion{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="text-center">
+    <h2 class="text-3xl font-bold mb-4 text-error">Delete Your Account</h2>
+    <p class="mb-6">
+        Are you sure you want to permanently delete your account? This action cannot be undone.
+        To confirm, please enter your password.
+    </p>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-control mb-4 text-left">
+            {{ form|crispy }}
+        </div>
+        <div class="flex justify-center gap-4">
+            <a href="{% url 'account' %}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-error">Yes, Delete My Account</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

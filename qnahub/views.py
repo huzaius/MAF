@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import Http404
+from django.shortcuts import get_object_or_404
 from .models import Question, Answer
 
 
@@ -11,14 +11,6 @@ def home_view(request):
 
 
 def question_detail_view(request, question_id):
-    all_questions = Question.objects.all()
-    question = next((q for q in all_questions if q['id'] == question_id), None)
-
-    if not question:
-        raise Http404("Question not found")
-
+    question = get_object_or_404(Question, pk=question_id)
     context = {'question': question}
     return render(request, 'qnahub/question_detail.html', context)
-
-
-

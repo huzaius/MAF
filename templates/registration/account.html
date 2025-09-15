@@ -1,0 +1,87 @@
+{% extends 'qnahub/base.html' %}
+{% block title %} Profile {% endblock title %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="hero bg-base-200 min-h-screen p-4">
+    <div class="w-full max-w-2xl flex flex-col gap-8">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- Profile Picture Card -->
+            <div class="card bg-base-100 shadow-xl rounded-2xl p-8 text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4">Profile Picture</h2>
+                <div class="avatar">
+                    <div class="w-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto">
+                        {% if user.userprofile.profile_picture and user.userprofile.profile_picture.url != '/media/profile_pics/default.jpg' %}
+                            <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" />
+                        {% else %}
+                            <img src="https://placehold.co/128x128/4f46e5/ffffff?text={{ user.username|first|upper }}" alt="Profile Picture" />
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="mt-4">
+                    {{ p_form.profile_picture|as_crispy_field }}
+                </div>
+            </div>
+
+            <!-- General Information Card -->
+            <div class="card bg-base-100 shadow-xl rounded-2xl p-8 mb-8">
+                <h2 class="text-3xl font-bold mb-4">General Information</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="form-control col-span-1 md:col-span-2">
+                        {{ u_form.username|as_crispy_field }}
+                    </div>
+                    <div class="form-control col-span-1 md:col-span-2">
+                        {{ u_form.email|as_crispy_field }}
+                    </div>
+                    <div class="form-control">
+                        {{ u_form.first_name|as_crispy_field }}
+                    </div>
+                    <div class="form-control">
+                        {{ u_form.last_name|as_crispy_field }}
+                    </div>
+                    <div class="form-control col-span-1 md:col-span-2">
+                        {{ p_form.phone_number|as_crispy_field }}
+                    </div>
+                    <div class="form-control col-span-1 md:col-span-2">
+                        {{ p_form.address|as_crispy_field }}
+                    </div>
+                    <div class="form-control">
+                        {{ p_form.city|as_crispy_field }}
+                    </div>
+                    <div class="form-control">
+                        {{ p_form.state|as_crispy_field }}
+                    </div>
+                    <div class="form-control">
+                        {{ p_form.zip_code|as_crispy_field }}
+                    </div>
+                    <div class="col-span-1 md:col-span-2">
+                        <button type="submit" class="btn btn-primary w-full rounded-lg mt-4 text-white font-bold">Save
+                            Changes</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Change Password Card -->
+        <div class="card bg-base-100 shadow-xl p-8 rounded-2xl mb-8">
+            <h3 class="text-xl font-bold mb-2">Security</h3>
+            <p class="text-sm opacity-80 mb-4">
+                Update your password to keep your account secure.
+            </p>
+            <a href="{% url 'password_change' %}" class="btn btn-secondary w-full rounded-lg text-white font-bold">Change Password</a>
+        </div>
+
+        <!-- Delete Account Card -->
+        <div class="card bg-warning text-warning-content shadow-xl p-8 rounded-2xl mb-8">
+            <h3 class="text-xl font-bold mb-2">Delete Account</h3>
+            <p class="text-sm opacity-80">
+                This action is permanent and cannot be undone. All your data will be erased.
+            </p>
+            <div class="mt-4">
+                
+                <a href="{% url 'delete_account' %}" class="btn btn-error w-full rounded-lg text-white font-bold">Delete Account</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

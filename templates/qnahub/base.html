@@ -1,4 +1,5 @@
 {% load static %}
+{% load tailwind_filters %}
 <!DOCTYPE html>
 <html lang="en"> <!-- data-theme is set by inline script -->
 
@@ -112,8 +113,11 @@
                         <div class="dropdown dropdown-end">
                             <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                                 <div class="ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
-                                    <img alt="User Avatar"
-                                        src="https://placehold.co/40x40/4f46e5/ffffff?text={{ user.username|first|upper }}" />
+                                    {% if user.userprofile.profile_picture and user.userprofile.profile_picture.url != '/media/profile_pics/default.jpg' %}
+                                        <img src="{{ user.userprofile.profile_picture.url }}" alt="User Avatar" />
+                                    {% else %}
+                                        <img alt="User Avatar" src="https://placehold.co/40x40/4f46e5/ffffff?text={{ user.username|first|upper }}" />
+                                    {% endif %}
                                 </div>
                             </div>
                             <ul tabindex="0"
@@ -147,8 +151,11 @@
                             {% if user.is_authenticated %}
                             <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                                 <div class="ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
-                                    <img alt="User Avatar"
-                                        src="https://placehold.co/40x40/4f46e5/ffffff?text={{ user.username|first|upper }}" />
+                                    {% if user.userprofile.profile_picture and user.userprofile.profile_picture.url != '/media/profile_pics/default.jpg' %}
+                                        <img src="{{ user.userprofile.profile_picture.url }}" alt="User Avatar" />
+                                    {% else %}
+                                        <img alt="User Avatar" src="https://placehold.co/40x40/4f46e5/ffffff?text={{ user.username|first|upper }}" />
+                                    {% endif %}
                                 </div>
                             </div>
                             {% else %}
