@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <h2 class="text-2xl font-bold">{{ question.answers|length }} Answers</h2>
+        <h2 class="text-2xl font-bold">{{ object.answers|length }} Answers</h2>
         <div class="space-y-6">
             {% for answer in question.answers %}
                 {% include "qnahub/question_answer.html" with answer=answer %}

@@ -18,34 +18,11 @@
     <div class="divider my-4"></div>
     <div class="form-control m-4">
         <p class="text-center text-m">
-            Dont have an account? <a href="/register" class="link link-primary">Sign-Up</a>
+            Dont have an account? <a href="{% url 'register' %}" class="link link-primary">Sign-Up</a>
         </p>
     </div>
 
 
 </form>
-<!-- Login Form -->
-<!-- <div class="form-container" id="login-form">
-                <h2 class="text-3xl font-bold text-center mb-6">Welcome Back</h2>
-                <form>
-                    <div class="form-control mb-4">
-                        <label class="label">
-                            <span class="label-text text-gray-400">Email</span>
-                        </label>
-                        <input type="email" placeholder="you@example.com" class="input input-bordered w-full rounded-lg" required />
-                    </div>
-                    <div class="form-control mb-6">
-                        <label class="label">
-                            <span class="label-text text-gray-400">Password</span>
-                        </label>
-                        <input type="password" placeholder="••••••••" class="input input-bordered w-full rounded-lg" required />
-                        <label class="label">
-                            <a href="#" class="label-text-alt link link-hover text-sm text-gray-400 mt-2">Forgot password?</a>
-                        </label>
-                    </div>
-                   
-                    <a type="submit" class="btn btn-primary w-full rounded-lg text-white font-bold" href="{% url 'users-login'}?next={{ request.path }}">Sign In</a>
-                    
-                </form>
-            </div> -->
+
 {% endblock %}

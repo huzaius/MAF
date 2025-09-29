@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Event Listeners ---
   if (sortDropdown) {
+    if (!sortButton) return;
     sortDropdown.addEventListener("click", (e) => {
       if (e.target.tagName === "A" && e.target.dataset.sort) {
         e.preventDefault();
@@ -48,12 +49,21 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       // This is client-side for demonstration.
       // In a real app, this would be an HTMX POST request.
-      const title = document.getElementById("modal-title").value;
-      const body = document.getElementById("modal-body").value;
+      const titleElement = document.getElementById("modal-title");
+      const bodyElement = document.getElementById("modal-body");
+      
+      if (!titleElement || !bodyElement) {
+        console.error("Required form elements not found");
+        return;
+      }
+      
+      const title = titleElement.value;
+      const body = bodyElement.value;
 
       if (title && body) {
         console.log("New Question Submitted (client-side):", { title, body });
-        askQuestionForm.parentElement.parentElement.close(); // Close modal
+        const modal = askQuestionForm.closest('dialog');
+        if (modal) modal.close();
         askQuestionForm.reset();
         // Reload the page to see the new question (in a real app, HTMX would handle this)
         window.location.reload();

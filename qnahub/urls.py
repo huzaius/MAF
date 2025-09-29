@@ -1,9 +1,10 @@
 from django.urls import path
+from .views import QuestionListView ,QuestionDetailView
 
-from . import views
+
 
 urlpatterns = [
-    path('', views.home_view, name='qnahub-home'),
-    path('question/<int:question_id>/', views.question_detail_view, name='qnahub-question-detail'),
+    path('', QuestionListView.as_view(), name='qnahub-home'),
+    path('question/<int:pk>/',QuestionDetailView.as_view(), name='qnahub-question-detail'),
 
 ]

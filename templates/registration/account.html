@@ -11,10 +11,12 @@
                 <h2 class="text-3xl font-bold mb-4">Profile Picture</h2>
                 <div class="avatar">
                     <div class="w-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto">
-                        {% if user.userprofile.profile_picture and user.userprofile.profile_picture.url != '/media/profile_pics/default.jpg' %}
+                        {% if user.userprofile.profile_picture %}
                             <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" />
                         {% else %}
-                            <img src="https://placehold.co/128x128/4f46e5/ffffff?text={{ user.username|first|upper }}" alt="Profile Picture" />
+                            <div class="w-32 h-32 bg-primary rounded-full flex items-center justify-center text-white text-4xl font-bold">
+                                {{ user.username|first|upper }}
+                            </div>
                         {% endif %}
                     </div>
                 </div>

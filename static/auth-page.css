@@ -11,7 +11,8 @@ body {
             transition: all 0.5s ease-in-out;
         }
         .hidden-form {
-            display: none;
             opacity: 0;
             transform: translateY(20px);
+            pointer-events: none;
+            visibility: hidden;
         }
