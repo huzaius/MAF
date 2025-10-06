@@ -10,9 +10,14 @@
             <div class="flex-1">
                 <div class="prose max-w-none"><p>{{ answer.content }}</p></div>
                 <div class="mt-6 flex items-center space-x-2 text-sm opacity-70">
-                    <div class="avatar"><div class="w-8 rounded-full"><img src="{{ answer.author.avatar }}" alt="{{ answer.author.name }}"></div></div>
-                    <div>
-                        <div>answered by <span class="font-medium">{{ answer.author.name }}</span></div>
+                    <div class="w-8 rounded-full">
+                                {% if answer.author.profile_picture %}
+                                <img src="{{ answer.author.profile_picture.url }}" alt="{{ answer.author.name }}" />
+                                {% else %}
+                                <img alt="{{ answer.author.name }}" src="https://placehold.co/40x40/4f46e5/ffffff?text={{ answer.author.username|first|upper }}" />
+                                {% endif %}
+                            </div>  <div>
+                        <div>answered by <span class="font-medium">{{ answer.author.username }}</span></div>
                         <div>{{ answer.time_ago }} ago</div>
                     </div>
                 </div>

@@ -12,16 +12,21 @@
                 <div class="avatar">
                     <div class="w-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mx-auto">
                         {% if user.userprofile.profile_picture %}
-                            <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" />
+                        <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" />
                         {% else %}
-                            <div class="w-32 h-32 bg-primary rounded-full flex items-center justify-center text-white text-4xl font-bold">
-                                {{ user.username|first|upper }}
-                            </div>
+                        <div
+                            class="w-32 h-32 bg-primary rounded-full flex items-center justify-center text-white text-4xl font-bold">
+                            {{ user.username|first|upper }}
+                        </div>
                         {% endif %}
                     </div>
                 </div>
                 <div class="mt-4">
                     {{ p_form.profile_picture|as_crispy_field }}
+                </div>
+                <div class="col-span-1 md:col-span-2">
+                    <button type="submit" class="btn btn-info w-full rounded-lg mt-4 text-white font-bold">Save
+                        Changes</button>
                 </div>
             </div>
 
@@ -70,7 +75,8 @@
             <p class="text-sm opacity-80 mb-4">
                 Update your password to keep your account secure.
             </p>
-            <a href="{% url 'password_change' %}" class="btn btn-secondary w-full rounded-lg text-white font-bold">Change Password</a>
+            <a href="{% url 'password_change' %}"
+                class="btn btn-secondary w-full rounded-lg text-white font-bold">Change Password</a>
         </div>
 
         <!-- Delete Account Card -->
@@ -80,8 +86,9 @@
                 This action is permanent and cannot be undone. All your data will be erased.
             </p>
             <div class="mt-4">
-                
-                <a href="{% url 'delete_account' %}" class="btn btn-error w-full rounded-lg text-white font-bold">Delete Account</a>
+
+                <a href="{% url 'delete_account' %}" class="btn btn-error w-full rounded-lg text-white font-bold">Delete
+                    Account</a>
             </div>
         </div>
     </div>

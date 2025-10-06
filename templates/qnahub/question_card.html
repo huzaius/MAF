@@ -11,7 +11,7 @@
             </div>
             <div class="flex-1">
                 <h2 class="card-title text-primary mb-2 hover:underline">{{ q.title }}</h2>
-                <p class="opacity-80 line-clamp-2 mb-4">{{ q.content }}</p>
+                <p class="opacity-80 line-clamp-2 mb-4">{{ q.content|escape }}</p>
                 <div class="card-actions justify-end items-center">
                     <div class="flex items-center space-x-2 text-sm opacity-70 mt-4">
                         <div class="avatar">
@@ -19,11 +19,11 @@
                                 {% if q.author.profile_picture %}
                                 <img src="{{ q.author.profile_picture.url }}" alt="{{ q.author.name }}" />
                                 {% else %}
-                                <img alt="{{ q.author.name }}" src="https://placehold.co/40x40/4f46e5/ffffff?text={{ q.author.name|first|upper }}" />
+                                <img alt="{{ q.author.name }}" src="https://placehold.co/40x40/4f46e5/ffffff?text={{ q.author.username|first|upper }}" />
                                 {% endif %}
                             </div>
                         </div>
-                        <span>{{ q.author.name }}</span>
+                        <span>{{ q.author.username|title }}</span>
                         <span>asked {{ q.timestamp|timesince }} ago</span>
                     </div>
                 </div>

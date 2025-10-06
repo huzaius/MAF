@@ -1,5 +1,5 @@
 {% extends 'qnahub/base.html' %}
-{%block content %}
+{% block content %}
 <main class="flex-1" id="main-content">
     <div class="space-y-8">
         <div>
@@ -19,10 +19,17 @@
                             </div>
                             <div class="flex items-center space-x-2 text-sm opacity-70">
                                 <div class="avatar">
-                                    <div class="w-8 rounded-full"><img src="{{ question.author.avatar }}" alt="{{ question.author.name }}"></div>
+                                    <div class="w-8 rounded-full">
+                                        {% if question.author.profile_picture %}
+                                        <img src="{{ question.author.profile_picture.url }}" alt="{{ question.author.name }}" />
+                                        {% else %}
+                                        <img alt="{{ question.author.name }}"
+                                            src="https://placehold.co/40x40/4f46e5/ffffff?text={{ question.author.username|first|upper }}" />
+                                        {% endif %}
+                                    </div>
                                 </div>
                                 <div>
-                                    <div>asked by <span class="font-medium">{{ question.author.name }}</span></div>
+                                    <div>asked by <span class="font-medium">{{ question.author.username }}</span></div>
                                     <div>on {{ question.timestamp|timesince }}</div>
                                 </div>
                             </div>
@@ -31,17 +38,25 @@
                 </div>
             </div>
         </div>
-        <h2 class="text-2xl font-bold">{{ object.answers|length }} Answers</h2>
+        <h2 class="text-2xl font-bold">{{ question.answers.count}} Answers</h2>
         <div class="space-y-6">
-            {% for answer in question.answers %}
-                {% include "qnahub/question_answer.html" with answer=answer %}
+            {% for answer in question.answers.all %}
+            {% include "qnahub/answer_list.html" with answer=answer %}
+
+            {% empty %}
+            <div class="card bg-base-100 shadow-md">
+                <div class="card-body">
+                    <p class="text-center opacity-70">No Answer for this question. Be the first to answer!</p>
+                </div>
+            </div>
             {% endfor %}
         </div>
         <div>
             <h2 class="text-2xl font-bold mb-4">Your Answer</h2>
             <div class="card bg-base-100 shadow-md border border-base-300">
                 <div class="card-body">
-                    <textarea class="textarea textarea-bordered h-24" placeholder="Write your detailed answer here..."></textarea>
+                    <textarea class="textarea textarea-bordered h-24"
+                        placeholder="Write your detailed answer here..."></textarea>
                     <div class="card-actions justify-end mt-4">
                         <button class="btn btn-primary">Post Your Answer</button>
                     </div>

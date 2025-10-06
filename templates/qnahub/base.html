@@ -51,36 +51,40 @@
                         </div>
                         <ul tabindex="0"
                             class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                            {% if user.is_staff %}
-                            <li><a>Home</a></li>
-                            <li><a>Subjects</a></li>
-                            <li><a>Unanswered</a></li>
-                            <li><a>All Users</a></li>
-                            <div class="divider"></div>
-                            {% endif %}
+
+                            {% include "qnahub/sidebar.html" %}
+
                             <li>
-<li>
-  <label class="input input-bordered flex items-center gap-2">
-    <input type="search" placeholder="Search" class="grow">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
-      <path fill-rule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clip-rule="evenodd" />
-    </svg>
-  </label>
-</li>
-                            <li><button class="btn btn-primary btn-sm w-full"
-                                    onclick="ask_question_modal.showModal()">Ask Question</button></li>
+                                <div class="w-full ">
+                                    <label class="input input-bordered flex items-center gap-2">
+                                        <input type="search" placeholder="Search" class="grow">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                                            class="w-4 h-4">
+                                            <path fill-rule="evenodd"
+                                                d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </label>
+                                </div>
+
+                            </li>
+                            <li class="mt-2">
+                                <a href="{% url 'qnahub-question-create' %}" class="btn btn-primary btn-sm w-full">
+                                    Ask Question
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <!-- Title -->
                     <div class="flex items-center space-x-2">
                         <div class="hidden md:block">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="text-primary">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                        </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="text-primary">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
                         </div>
-                        
+
                         <a href="{% url 'qnahub-home' %}" class="text-xl md:text-2xl font-bold">Q&A HUB</a>
                     </div>
                 </div>
@@ -106,7 +110,7 @@
                         <!-- Theme Icons -->
                         {% include "qnahub/theme_icons.html" %}
 
-                        <button class="btn btn-primary" onclick="ask_question_modal.showModal()">Ask Question</button>
+                        <a href="{%url 'qnahub-question-create' %}" class="btn btn-primary">Ask Question</a>
 
                         {% if user.is_authenticated %}
                         <span class="navbar-text text-primary"> Welcome {{user.username}}</span>
@@ -115,9 +119,10 @@
                             <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                                 <div class="ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
                                     {% if user.userprofile.profile_picture %}
-                                        <img src="{{ user.userprofile.profile_picture.url }}" alt="User Avatar" />
+                                    <img src="{{ user.userprofile.profile_picture.url|escape }}" alt="User Avatar" />
                                     {% else %}
-                                        <img alt="User Avatar" src="https://placehold.co/40x40/4f46e5/ffffff?text={{ user.username|first|upper }}" />
+                                    <img alt="User Avatar"
+                                        src="https://placehold.co/40x40/4f46e5/ffffff?text={{ user.username|first|upper }}" />
                                     {% endif %}
                                 </div>
                             </div>
@@ -153,9 +158,10 @@
                             <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                                 <div class="ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
                                     {% if user.userprofile.profile_picture %}
-                                        <img src="{{ user.userprofile.profile_picture.url }}" alt="User Avatar" />
+                                    <img src="{{ user.userprofile.profile_picture.url }}" alt="User Avatar" />
                                     {% else %}
-                                        <img alt="User Avatar" src="https://placehold.co/40x40/4f46e5/ffffff?text={{ user.username|first|upper }}" />
+                                    <img alt="User Avatar"
+                                        src="https://placehold.co/40x40/4f46e5/ffffff?text={{ user.username|first|upper }}" />
                                     {% endif %}
                                 </div>
                             </div>
@@ -198,7 +204,7 @@
         <div class="container mx-auto flex flex-col md:flex-row px-4 sm:px-6 lg:px-8 mt-6 gap-8">
 
             <!-- Sidebar -->
-            {% include "qnahub/sidebar.html" %}
+            {% include "qnahub/sidebar.html" with extra_classes="hidden md:block" %}
 
             <!-- Flash messages -->
             <div class="flex-1">
@@ -218,35 +224,16 @@
                 {% endif %}
 
                 <!-- Page Content -->
+              
                 {% block content %}
                 {% endblock content %}
+
+                <!-- End Page Content -->
             </div>
+
         </div>
 
-        <!-- DaisyUI "Ask Question" Modal -->
-        <dialog id="ask_question_modal" class="modal">
-            <div class="modal-box w-11/12 max-w-2xl">
-                <h3 class="font-bold text-lg">Ask a Public Question</h3>
-                <div class="py-4 space-y-4">
-                    <label class="form-control w-full">
-                        <div class="label"><span class="label-text">Title</span></div>
-                        <input id="modal-title" type="text" placeholder="e.g. Is there a JS function to format dates?"
-                            class="input input-bordered w-full" />
-                    </label>
-                    <label class="form-control">
-                        <div class="label"><span class="label-text">Body</span></div>
-                        <textarea id="modal-body" class="textarea textarea-bordered h-24"
-                            placeholder="Include all the information someone would need to answer your question."></textarea>
-                    </label>
-                </div>
-                <div class="modal-action">
-                    <form id="ask-question-form" method="dialog">
-                        <button type="submit" class="btn btn-primary">Post Question</button>
-                        <button type="button" onclick="ask_question_modal.close()" class="btn">Close</button>
-                    </form>
-                </div>
-            </div>
-        </dialog>
+
 
         <!-- Custom App JS -->
         <script src="{% static 'qnahub/js/main.js' %}"></script>
@@ -257,6 +244,10 @@
 </body>
 {% endblock body %}
 
-
+<footer class="footer footer-center p-4 bg-base-300 text-base-content">
+    <div>
+        <p>© 2025 Q&A HUB. All rights reserved.</p>
+    </div>
+</footer>
 
 </html>

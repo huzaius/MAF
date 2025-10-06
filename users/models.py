@@ -15,7 +15,7 @@ class UserProfile(models.Model):
     profile_picture = ResizedImageField(
         size=[128, 128],
         quality=75,
-        default='https://placehold.co/40x40/4f46e5/ffffff?text={{ user.username|first|upper',
+        #default='https://placehold.co/40x40/4f46e5/ffffff?text={{ user.username|first|upper',
         upload_to='profile_pics/',
         force_format='WEBP',
         blank=True,

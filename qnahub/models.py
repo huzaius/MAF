@@ -19,7 +19,7 @@ class Question(models.Model):
 
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='answers')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='authored_answers')
     content = models.TextField()
     timestamp = models.DateTimeField(default=timezone.now)
     accepted = models.BooleanField(default=False)
@@ -32,3 +32,17 @@ class Answer(models.Model):
     @property
     def net_votes(self):
         return self.upvotes.count() - self.downvotes.count()
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['author']),
+            models.Index(fields=['timestamp']),
+        ]
+
+        constraints = [
+        models.UniqueConstraint(
+            fields=['question'],
+            condition=models.Q(accepted=True),
+            name='unique_accepted_answer_per_question'
+        ),
+    ]
