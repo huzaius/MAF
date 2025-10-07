@@ -10,7 +10,15 @@
             
             <!-- Sort Dropdown -->
             <div class="dropdown dropdown-end">
-                <div tabindex="0" role="button" id="sort-button" class="btn m-1">Sort by: Newest</div>
+                <div tabindex="0" role="button" id="sort-button" class="btn m-1">
+                    Sort by: 
+                    {% with sort_param=request.GET.sort %}
+                        {% if sort_param == 'votes' %}Most Voted
+                        {% elif sort_param == 'answers' %}Most Answered
+                        {% else %}Newest
+                        {% endif %}
+                    {% endwith %}
+                </div>
                 <ul tabindex="0" id="sort-dropdown" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                     <li><a data-sort="newest">Newest</a></li>
                     <li><a data-sort="votes">Most Voted</a></li>

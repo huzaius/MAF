@@ -2,10 +2,27 @@
     <div class="card-body word-break p-6">
         <div class="flex gap-6">
             <div class="flex flex-col items-center">
-                <button class="btn btn-ghost btn-sm text-lg">▲</button>
+                <form action="{% url 'qnahub-answer-vote' answer.pk %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="vote_type" value="up">
+                    <button type="submit" class="btn btn-ghost btn-sm text-lg {% if user in answer.upvotes.all %}text-primary{% endif %}">▲</button>
+                </form>
                 <span class="text-xl font-bold">{{ answer.net_votes }}</span>
-                <button class="btn btn-ghost btn-sm text-lg">▼</button>
-                {% if answer.accepted %}<div class="mt-4 text-success tooltip" data-tip="Accepted Answer">✔️</div>{% endif %}
+                <form action="{% url 'qnahub-answer-vote' answer.pk %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="vote_type" value="down">
+                    <button type="submit" class="btn btn-ghost btn-sm text-lg {% if user in answer.downvotes.all %}text-primary{% endif %}">▼</button>
+                </form>
+                {% if user.is_authenticated and user == answer.question.author %}
+                <form action="{% url 'qnahub-answer-accept' answer.pk %}" method="post" class="mt-2">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-ghost btn-sm tooltip {% if answer.accepted %}text-success{% endif %}" data-tip="Mark as accepted answer">
+                        ✔️
+                    </button>
+                </form>
+                {% elif answer.accepted %}
+                <div class="mt-4 text-success tooltip" data-tip="Accepted Answer">✔️</div>
+                {% endif %}
             </div>
             <div class="flex-1">
                 <div class="prose max-w-none"><p>{{ answer.content }}</p></div>
