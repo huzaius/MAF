@@ -1,8 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormMixin
 
-from qnahub.forms import QuestionForm
+from qnahub.forms import AnswerForm, QuestionForm
 from .models import Question, Answer
 from django.urls import reverse_lazy
 
@@ -16,10 +16,32 @@ class QuestionListView(ListView):
     paginate_by = 5
 
 
-class QuestionDetailView(DetailView):
+class QuestionDetailView(LoginRequiredMixin, FormMixin, DetailView):
     model = Question
+    form_class = AnswerForm
 
+    def get_success_url(self):
+        return reverse_lazy('qnahub-question-detail', kwargs={'pk': self.get_object().pk})
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.get_form()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.question = self.get_object()
+        form.save() # have to save the form to create the Answer instance since using FormMixin
+        return super().form_valid(form)
+       
 class QuestionCreateView(LoginRequiredMixin, CreateView):
     model = Question
     form_class = QuestionForm
@@ -31,7 +53,7 @@ class QuestionCreateView(LoginRequiredMixin, CreateView):
     
     def get_success_url(self):
         return reverse_lazy('qnahub-question-detail', kwargs={'pk': self.object.pk})
-    
+       
 class QuestionUpdateView(UpdateView):
     model = Question
     fields = ['title', 'content']

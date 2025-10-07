@@ -53,15 +53,7 @@
         </div>
         <div>
             <h2 class="text-2xl font-bold mb-4">Your Answer</h2>
-            <div class="card bg-base-100 shadow-md border border-base-300">
-                <div class="card-body">
-                    <textarea class="textarea textarea-bordered h-24"
-                        placeholder="Write your detailed answer here..."></textarea>
-                    <div class="card-actions justify-end mt-4">
-                        <button class="btn btn-primary">Post Your Answer</button>
-                    </div>
-                </div>
-            </div>
+            {% include "qnahub/answer_form.html" %}
         </div>
     </div>
 </main>

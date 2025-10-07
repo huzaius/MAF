@@ -1,0 +1,11 @@
+
+{% load crispy_forms_tags %}
+
+<form  method="POST">
+    {% csrf_token %}
+    <div class="form-control">
+        {{form|crispy}}
+        <button type="submit" class="btn btn-primary mt-4">Submit Question</button>
+    </div>
+</form>
+
