@@ -17,13 +17,14 @@
                             <div class="prose max-w-none mb-6">
                                 <p>{{ question.content }}</p>
                             </div>
-                            <div class="flex items-center space-x-2 text-sm opacity-70">
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center space-x-2 text-sm opacity-70">
                                 <div class="avatar">
                                     <div class="w-8 rounded-full">
-                                        {% if question.author.profile_picture %}
-                                        <img src="{{ question.author.profile_picture.url }}" alt="{{ question.author.name }}" />
+                                        {% if question.author.userprofile.profile_picture %}
+                                        <img src="{{ question.author.userprofile.profile_picture.url }}" alt="{{ question.author.username }}" />
                                         {% else %}
-                                        <img alt="{{ question.author.name }}"
+                                        <img alt="{{ question.author.username }}"
                                             src="https://placehold.co/40x40/4f46e5/ffffff?text={{ question.author.username|first|upper }}" />
                                         {% endif %}
                                     </div>
@@ -33,6 +34,12 @@
                                     <div>on {{ question.timestamp|timesince }}</div>
                                 </div>
                             </div>
+                                {% if user.is_authenticated and user == question.author %}
+                                <div class="flex gap-2">
+                                    <a href="{% url 'qnahub-question-update' question.id %}" class="btn btn-sm btn-outline btn-info">Update</a>
+                                    <a href="{% url 'qnahub-question-delete' question.id %}" class="btn btn-sm btn-outline btn-error">Delete</a>
+                                </div>
+                                {% endif %}
                         </div>
                     </div>
                 </div>

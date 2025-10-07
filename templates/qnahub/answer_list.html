@@ -1,5 +1,5 @@
 <div class="card bg-base-100 shadow-md {% if answer.accepted %}border border-success bg-success/10{% endif %}">
-    <div class="card-body">
+    <div class="card-body word-break p-6">
         <div class="flex gap-6">
             <div class="flex flex-col items-center">
                 <button class="btn btn-ghost btn-sm text-lg">▲</button>
@@ -9,17 +9,28 @@
             </div>
             <div class="flex-1">
                 <div class="prose max-w-none"><p>{{ answer.content }}</p></div>
-                <div class="mt-6 flex items-center space-x-2 text-sm opacity-70">
-                    <div class="w-8 rounded-full">
-                                {% if answer.author.profile_picture %}
-                                <img src="{{ answer.author.profile_picture.url }}" alt="{{ answer.author.name }}" />
+                <div class="mt-6 flex justify-between items-center">
+                    <div class="flex items-center space-x-2 text-sm opacity-70">
+                        <div class="avatar">
+                            <div class="w-8 h-8 rounded-full">
+                                {% if answer.author.userprofile.profile_picture %}
+                                <img src="{{ answer.author.userprofile.profile_picture.url }}" alt="{{ answer.author.username }}" />
                                 {% else %}
-                                <img alt="{{ answer.author.name }}" src="https://placehold.co/40x40/4f46e5/ffffff?text={{ answer.author.username|first|upper }}" />
+                                <img alt="{{ answer.author.username }}" src="https://placehold.co/40x40/4f46e5/ffffff?text={{ answer.author.username|first|upper }}" />
                                 {% endif %}
-                            </div>  <div>
+                            </div>
+                        </div>
+                        <div>
                         <div>answered by <span class="font-medium">{{ answer.author.username }}</span></div>
-                        <div>{{ answer.time_ago }} ago</div>
+                        <div>{{ answer.timestamp|timesince}} ago</div>
                     </div>
+                    </div>
+                    {% if user.is_authenticated and user == answer.author %}
+                    <div class="flex gap-2">
+                        <a href="{% url 'qnahub-answer-update' answer.id %}" class="btn btn-xs btn-outline btn-info">Update</a>
+                        <a href="{% url 'qnahub-answer-delete' answer.id %}" class="btn btn-xs btn-outline btn-error">Delete</a>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

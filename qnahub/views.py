@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormMixin
 
@@ -54,21 +54,36 @@ class QuestionCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('qnahub-question-detail', kwargs={'pk': self.object.pk})
        
-class QuestionUpdateView(UpdateView):
+class QuestionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Question
-    fields = ['title', 'content']
+    form_class = QuestionForm
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
+    def get_success_url(self):
+        return reverse_lazy('qnahub-question-detail', kwargs={'pk': self.object.pk})
     
-class QuestionDeleteView(DeleteView):
+    def test_func(self):
+        question = self.get_object()
+        return self.request.user == question.author
+
+class QuestionDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Question
     success_url = reverse_lazy('qnahub-home')
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)    
+    def test_func(self):
+        question = self.get_object()
+        return self.request.user == question.author
+
+class AnswerUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Answer
+    form_class = AnswerForm
+    template_name = 'qnahub/answer_update_form.html'
+    def get_success_url(self):
+        return reverse_lazy('qnahub-question-detail', kwargs={'pk': self.object.question.pk})
+
+    def test_func(self):
+        answer = self.get_object()
+        return self.request.user == answer.author
+
 
 
 class QuestionByUserListView(ListView):
@@ -92,3 +107,13 @@ class AnswerByUserListView(ListView):
         from django.contrib.auth.models import User
         user = User.objects.get(username=self.kwargs.get('username'))
         return Answer.objects.filter(author=user).order_by('-timestamp')
+
+class AnswerDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Answer
+
+    def get_success_url(self):
+        return reverse_lazy('qnahub-question-detail', kwargs={'pk': self.object.question.pk})
+
+    def test_func(self):
+        answer = self.get_object()
+        return self.request.user == answer.author

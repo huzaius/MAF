@@ -29,7 +29,7 @@ class AnswerForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'class': 'textarea textarea-bordered rounded-lg w-full h-40 text-lg p-3', 'placeholder': "Write your detailed answer here..."}),
         }
         labels = {
-            'content': 'Your Answer',
+            'content': 'Edit Answer',
         }
         help_texts = {
             'content': 'Provide a detailed answer to the question.',
