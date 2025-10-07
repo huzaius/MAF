@@ -44,7 +44,7 @@
                     </div>
                     {% if user.is_authenticated and user == answer.author %}
                     <div class="flex gap-2">
-                        <a href="{% url 'qnahub-answer-update' answer.id %}" class="btn btn-xs btn-outline btn-info">Update</a>
+                        <a href="{% url 'qnahub-answer-update' answer.id %}" class="btn btn-xs btn-outline btn-info">Edit</a>
                         <a href="{% url 'qnahub-answer-delete' answer.id %}" class="btn btn-xs btn-outline btn-error">Delete</a>
                     </div>
                     {% endif %}

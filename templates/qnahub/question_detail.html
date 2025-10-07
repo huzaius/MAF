@@ -2,30 +2,30 @@
 {% block content %}
 <main class="flex-1" id="main-content">
     <div class="space-y-8">
-        <div>
+        <div class="mb-4">
             <a href="{% url 'qnahub-home' %}" class="btn btn-ghost mb-6">&larr; Back to Questions</a>
             <div class="card bg-base-100 shadow-md border border-base-300">
                 <div class="card-body">
                     <div class="flex gap-6">
-                        <div class="flex flex-col items-center text-center w-24 flex-shrink-0">
+                        <div class="flex flex-col items-center text-center flex-shrink-0">
                             <form action="{% url 'qnahub-question-vote' question.pk %}" method="post">
                                 {% csrf_token %}
                                 <input type="hidden" name="vote_type" value="up">
-                                <button type="submit" class="btn btn-ghost btn-sm text-2xl {% if user in question.upvotes.all %}text-primary{% endif %}">▲</button>
+                                <button type="submit" class="btn btn-ghost btn-sm text-xl {% if user in question.upvotes.all %}text-primary{% endif %}">▲</button>
                             </form>
-                            <span class="text-2xl font-bold">{{ question.net_votes }}</span>
+                            <span class="text-xl font-bold">{{ question.net_votes }}</span>
                             <form action="{% url 'qnahub-question-vote' question.pk %}" method="post">
                                 {% csrf_token %}
                                 <input type="hidden" name="vote_type" value="down">
-                                <button type="submit" class="btn btn-ghost btn-sm text-2xl {% if user in question.downvotes.all %}text-primary{% endif %}">▼</button>
+                                <button type="submit" class="btn btn-ghost btn-sm text-xl {% if user in question.downvotes.all %}text-primary{% endif %}">▼</button>
                             </form>
                         </div>
                         <div class="flex-1">
-                            <h1 class="text-3xl font-bold mb-4">{{ question.title }}</h1>
+                            <h1 class="text-xl font-bold mb-4">{{ question.title }}</h1>
                             <div class="prose max-w-none mb-6">
                                 <p>{{ question.content }}</p>
                             </div>
-                            <div class="flex justify-between items-center">
+                            <div class="flex justify-between items-center flex-wrap gap-2">
                                 <div class="flex items-center space-x-2 text-sm opacity-70">
                                 <div class="avatar">
                                     <div class="w-8 rounded-full">
@@ -39,12 +39,12 @@
                                 </div>
                                 <div>
                                     <div>asked by <span class="font-medium">{{ question.author.username }}</span></div>
-                                    <div>on {{ question.timestamp|timesince }}</div>
+                                    <div>{{ question.timestamp|timesince }} ago</div>
                                 </div>
                             </div>
                                 {% if user.is_authenticated and user == question.author %}
                                 <div class="flex gap-2">
-                                    <a href="{% url 'qnahub-question-update' question.id %}" class="btn btn-sm btn-outline btn-info">Update</a>
+                                    <a href="{% url 'qnahub-question-update' question.id %}" class="btn btn-sm btn-outline btn-info">Edit</a>
                                     <a href="{% url 'qnahub-question-delete' question.id %}" class="btn btn-sm btn-outline btn-error">Delete</a>
                                 </div>
                                 {% endif %}

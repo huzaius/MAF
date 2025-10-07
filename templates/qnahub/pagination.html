@@ -1,0 +1,45 @@
+{% if is_paginated %}
+        <div class="pagination flex flex-wrap items-center justify-center m-4">
+            <span class="page-info mr-4 text-justify">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            <div class="btn-group">
+                {% if page_obj.has_previous %}
+                <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                    <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}" class="btn">Previous</a>
+                {% else %}
+                    <button class="btn btn-disabled">Previous</button>
+                {% endif %}
+                
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}" class="btn">Next</a>
+                {% else %}
+                    <button class="btn btn-disabled">Next</button>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if is_paginated %}
+
+      {% if page_obj.has_previous %}
+       <div class="pagination flex flex-wrap items-center justify-center m-4">
+      
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      </div>
+        {% endif %}
+
+    {% endif %}
+</div>

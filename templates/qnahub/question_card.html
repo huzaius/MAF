@@ -2,9 +2,9 @@
     <div class="card-body p-6">
         <div class="flex gap-6">
             <div class="flex flex-col items-center text-center w-24 flex-shrink-0">
-                <div class="text-2xl font-bold">{{ q.net_votes }}</div>
+                <div class="text-xl font-bold">{{ q.net_votes }}</div>
                 <div class="text-sm opacity-70">votes</div>
-                <div class="mt-2 text-2xl font-bold">{{ q.answers.count }}</div>
+                <div class="mt-2 text-xl font-bold">{{ q.answers.count }}</div>
                 <div class="text-sm opacity-70">answers</div>
             </div>
             <div class="flex-1">
@@ -12,10 +12,10 @@
                     <h2 class="card-title text-primary mb-2 hover:underline">{{ q.title }}</h2>
                     <p class="opacity-80 line-clamp-2 mb-4">{{ q.content|escape }}</p>
                 </a>
-                <div class="flex justify-between items-center mt-4">
+                <div class="flex justify-between items-center flex-wrap gap-2 mt-4">
                     {% if user.is_authenticated and user == q.author %}
                     <div class="flex gap-2">
-                        <a href="{% url 'qnahub-question-update' q.id %}" class="btn btn-xs btn-outline btn-info">Update</a>
+                        <a href="{% url 'qnahub-question-update' q.id %}" class="btn btn-xs btn-outline btn-info">Edit</a>
                         <a href="{% url 'qnahub-question-delete' q.id %}" class="btn btn-xs btn-outline btn-error">Delete</a>
                     </div>
                     {% endif %}
@@ -29,8 +29,8 @@
                                  {% endif %}
                             </div>
                         </div>
-                        <span>{{ q.author.username|title }}</span>
-                        <span>asked {{ q.timestamp|timesince }} ago</span>
+                        <span class="text-sm">{{ q.author.username|title }}</span>
+                        <span class="text-sm">asked {{ q.timestamp|timesince }} ago</span>
                     </div>
                 </div>
             </div>
